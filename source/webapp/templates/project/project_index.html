@@ -5,6 +5,9 @@
 {% block content %}
     <form method="POST" action="{% url 'project_index' %}">
         {% csrf_token %}
+    {% if is_paginated %}
+        {% include 'partial/pagination.html' %}
+    {% endif %}
         <table class="table">
             <h3>Projects</h3>
             <thead>
@@ -26,5 +29,8 @@
                 </tbody>
             {% endfor %}
         </table>
+    {% if is_paginated %}
+        {% include 'partial/pagination.html' %}
+    {% endif %}
     </form>
 {% endblock %}
