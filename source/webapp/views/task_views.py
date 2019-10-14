@@ -36,7 +36,6 @@ class IndexView(ListView):
             )
         return queryset
 
-
     def get_search_form(self):
         return SimpleSearchForm(self.request.GET)
 
@@ -44,6 +43,19 @@ class IndexView(ListView):
         if self.form.is_valid():
             return self.form.cleaned_data['search']
         return None
+
+
+# class SearchView(ListView):
+#     model = Task
+#     template_name = 'task/index.html'
+#
+#     def get_queryset(self):
+#         query = self.request.GET.get('q')
+#         context = Task.objects.filter(
+#             Q(summary__icontains=query)
+#                 | Q(description__icontains=query)
+#             )
+#         return context
 
 
 class TaskView(DetailView):
