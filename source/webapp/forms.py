@@ -49,3 +49,7 @@ class ProjectForm(forms.ModelForm):
         model = Project
         fields =['name', 'description']
 
+
+class SimpleSearchForm(forms.Form):
+    search = forms.CharField(max_length=100, required=False, label="Search")
+
