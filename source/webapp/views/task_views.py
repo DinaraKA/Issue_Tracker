@@ -32,7 +32,7 @@ class IndexView(ListView):
         if self.search_query:
             queryset = queryset.filter(
                 Q(summary__icontains=self.search_query)
-                | Q(description__icontains=self.search_query)
+                |Q(description__icontains=self.search_query)
             )
         return queryset
 
