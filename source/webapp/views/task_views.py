@@ -81,7 +81,7 @@ class TaskProjectCreateView(CreateView):
     def form_valid(self, form):
         project_pk = self.kwargs.get('pk')
         project = get_object_or_404(Project, pk=project_pk)
-        project.projects.create(**form.cleaned_data)
+        project.tasks.create(**form.cleaned_data)
         return redirect('project_view', pk=project_pk)
 
 

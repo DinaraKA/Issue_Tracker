@@ -31,9 +31,9 @@ class Project(models.Model):
 class Task(models.Model):
     summary = models.CharField(max_length=100, verbose_name="Summary")
     description = models.TextField(max_length=2000, null=True, blank=True, verbose_name="Description")
-    status = models.ForeignKey(Status, related_name='statuses', on_delete=models.PROTECT, verbose_name='Status')
-    type = models.ForeignKey(Type, related_name='types', on_delete=models.PROTECT, verbose_name='Type')
-    project = models.ForeignKey(Project, null=True, related_name='projects', on_delete=models.PROTECT,verbose_name='Project')
+    status = models.ForeignKey(Status, related_name='tasks', on_delete=models.PROTECT, verbose_name='Status')
+    type = models.ForeignKey(Type, related_name='tasks', on_delete=models.PROTECT, verbose_name='Type')
+    project = models.ForeignKey(Project, null=True, related_name='tasks', on_delete=models.PROTECT,verbose_name='Project')
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Created date')
     updated_at = models.DateTimeField(auto_now=True, verbose_name='Updated date')
 
