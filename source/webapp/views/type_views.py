@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import ProtectedError
 from django.shortcuts import render
 from django.urls import reverse
@@ -12,7 +13,7 @@ class TypeIndexView(ListView):
     template_name = 'type/type_index.html'
 
 
-class TypeCreateView(CreateView):
+class TypeCreateView(LoginRequiredMixin, CreateView):
     model = Type
     template_name = 'type/type_create.html'
     form_class = TypeForm
@@ -21,7 +22,7 @@ class TypeCreateView(CreateView):
         return reverse('webapp:type_index')
 
 
-class TypeUpdateView(UpdateView):
+class TypeUpdateView(LoginRequiredMixin, UpdateView):
     model = Type
     template_name = 'type/type_update.html'
     form_class = TypeForm
@@ -31,7 +32,7 @@ class TypeUpdateView(UpdateView):
         return reverse('webapp:type_index')
 
 
-class TypeDeleteView(DeleteView):
+class TypeDeleteView(LoginRequiredMixin, DeleteView):
     model = Type
     template_name = 'error.html'
 
