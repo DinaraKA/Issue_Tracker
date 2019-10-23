@@ -15,11 +15,17 @@
 <nav class="navbar">
     <div class="container">
         <ul class="menu">
-            <li><a href="{% url 'index' %}">Home</a></li>
-            <li><a href="{% url 'project_index' %}">Projects</a></li>
-            <li><a href="{% url 'status_index' %}">Statuses</a></li>
-            <li><a href="{% url 'type_index' %}">Types</a></li>
+            <li><a href="{% url 'webapp:index' %}">Home</a></li>
+            <li><a href="{% url 'webapp:project_index' %}">Projects</a></li>
+            <li><a href="{% url 'webapp:status_index' %}">Statuses</a></li>
+            <li><a href="{% url 'webapp:type_index' %}">Types</a></li>
             {% block menu %}{% endblock %}
+            {% if user.is_authenticated %}
+                <li class="menu-right"><a href="{% url 'accounts:logout' %}" class="nav-link">Sign out</a></li>
+                <li class="menu-right">Hello, {{ user.username }}!</li>
+            {% else %}
+                <li class="menu-right"><a href="{% url 'accounts:login' %}" class="nav-link">Sign in</a></li>
+            {% endif %}
         </ul>
     </div>
 </nav>

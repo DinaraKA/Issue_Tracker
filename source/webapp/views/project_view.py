@@ -1,7 +1,7 @@
 from django.core.paginator import Paginator
 from django.db.models import ProtectedError, Q
-from django.shortcuts import render
-from django.urls import reverse, reverse_lazy
+from django.shortcuts import render, redirect
+from django.urls import reverse
 from django.utils.http import urlencode
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from webapp.forms import ProjectTaskForm, ProjectForm, SimpleSearchForm
@@ -73,7 +73,7 @@ class ProjectCreateView(CreateView):
     form_class = ProjectForm
 
     def get_success_url(self):
-        return reverse('project_index')
+        return reverse('webapp:project_index')
 
 
 class ProjectUpdateView(UpdateView):
@@ -83,7 +83,7 @@ class ProjectUpdateView(UpdateView):
     context_object_name = 'project'
 
     def get_success_url(self):
-        return reverse('project_view', kwargs={'pk': self.object.pk})
+        return reverse('webapp:project_view', kwargs={'pk': self.object.pk})
 
 
 class ProjectDeleteView(DeleteView):
@@ -97,4 +97,4 @@ class ProjectDeleteView(DeleteView):
             return render(request, self.template_name)
 
     def get_success_url(self):
-        return reverse('project_index')
+        return reverse('webapp:project_index')

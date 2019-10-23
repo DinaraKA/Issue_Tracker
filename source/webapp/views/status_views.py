@@ -18,7 +18,7 @@ class StatusCreateView(CreateView):
     form_class = StatusForm
 
     def get_success_url(self):
-        return reverse('status_index')
+        return reverse('webapp:status_index')
 
 
 class StatusUpdateView(UpdateView):
@@ -28,7 +28,7 @@ class StatusUpdateView(UpdateView):
     context_object_name = 'status'
 
     def get_success_url(self):
-        return reverse('status_index')
+        return reverse('webapp:status_index')
 
 
 class StatusDeleteView(DeleteView):
@@ -42,4 +42,4 @@ class StatusDeleteView(DeleteView):
             return render(request, self.template_name)
 
     def get_success_url(self):
-        return reverse('status_index')
+        return reverse('webapp:status_index')
