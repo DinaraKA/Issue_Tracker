@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render
 from django.urls import reverse
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
@@ -12,7 +13,7 @@ class StatusIndexView(ListView):
     template_name = 'status/status_index.html'
 
 
-class StatusCreateView(CreateView):
+class StatusCreateView(LoginRequiredMixin, CreateView):
     model = Status
     template_name = 'status/status_create.html'
     form_class = StatusForm
@@ -21,7 +22,7 @@ class StatusCreateView(CreateView):
         return reverse('webapp:status_index')
 
 
-class StatusUpdateView(UpdateView):
+class StatusUpdateView(LoginRequiredMixin, UpdateView):
     model = Status
     template_name = 'status/status_update.html'
     form_class = StatusForm
@@ -31,7 +32,7 @@ class StatusUpdateView(UpdateView):
         return reverse('webapp:status_index')
 
 
-class StatusDeleteView(DeleteView):
+class StatusDeleteView(LoginRequiredMixin, DeleteView):
     model = Status
     template_name = 'error.html'
 
