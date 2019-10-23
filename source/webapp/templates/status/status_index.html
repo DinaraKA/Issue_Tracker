@@ -1,9 +1,9 @@
 {% extends 'base.html' %}
 {% block menu %}
-    <li><a href="{% url 'status_add' %}">Add Status</a></li>
+    <li><a href="{% url 'webapp:status_add' %}">Add Status</a></li>
 {% endblock %}
 {% block content %}
-    <form method="POST" action="{% url 'status_index' %}">
+    <form method="POST" action="{% url 'webapp:status_index' %}">
         {% csrf_token %}
         <table class="table">
             <h3>Statuses</h3>
@@ -20,8 +20,8 @@
                     <tr>
                         <th scope="row">{{ forloop.counter }}</th>
                         <td>{{ status.status_name }}</td>
-                        <td class="symbol"><a href="{% url 'status_update' status.pk %}">&#x270E;</a></td>
-                        <td class="symbol"><a href="{% url 'status_delete' status.pk %}">X</a></td>
+                        <td class="symbol"><a href="{% url 'webapp:status_update' status.pk %}">&#x270E;</a></td>
+                        <td class="symbol"><a href="{% url 'webapp:status_delete' status.pk %}">X</a></td>
                     </tr>
                 </tbody>
             {% endfor %}

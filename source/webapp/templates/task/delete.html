@@ -1,13 +1,13 @@
 {% extends "base.html" %}
 {% block title %}Delete Task{% endblock %}
 {% block menu %}
-    <li><a href="{% url 'task_view' task.pk %}">View</a></li>
+    <li><a href="{% url 'webapp:task_view' task.pk %}">View</a></li>
 {% endblock %}
 {% block content %}
     <div class="jumbotron jumbotron-fluid">
         <div class="container">
             <h2>Are you sure want to delete task?</h2>
-            <form method="POST" action="{% url "task_delete" task.pk %}" class="text-center">
+            <form method="POST" action="{% url "webapp:task_delete" task.pk %}" class="text-center">
                 {% csrf_token %}
                 <p class="lead">{{ task.summary }}</p>
                 <hr class="my-4">

@@ -1,11 +1,11 @@
 {% extends 'base.html' %}
 {% block menu %}
-    <li><a href="{% url 'task_add' %}">Add Task</a></li>
+    <li><a href="{% url 'webapp:task_add' %}">Add Task</a></li>
 {% endblock %}
 {% block content %}
     <h2>Issues</h2>
     {% include 'partial/simple_search.html' %}
-    <form method="POST" action="{% url 'index' %}">
+    <form method="POST" action="{% url 'webapp:index' %}">
         {% csrf_token %}
     {% if is_paginated %}
         {% include 'partial/pagination.html' %}
@@ -25,7 +25,7 @@
                 <tbody>
                     <tr>
                         <th scope="row">{{ forloop.counter }}</th>
-                        <td><a href="{% url 'task_view' task.pk %}">{{ task.summary }}</a></td>
+                        <td><a href="{% url 'webapp:task_view' task.pk %}">{{ task.summary }}</a></td>
                         <td>{{ task.project }}</td>
                         <td>{{ task.status }}</td>
                         <td>{{ task.type }}</td>

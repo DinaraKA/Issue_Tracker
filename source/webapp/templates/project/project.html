@@ -1,8 +1,8 @@
 {% extends 'base.html' %}
 {% block title %}{{ project.name}}{% endblock %}
 {% block menu %}
-    <li><a href="{% url 'project_update' project.pk %}">Update</a></li>
-    <li><a href="{% url 'project_delete' project.pk %}">Delete</a></li>
+    <li><a href="{% url 'webapp:project_update' project.pk %}">Update</a></li>
+    <li><a href="{% url 'webapp:project_delete' project.pk %}">Delete</a></li>
 {% endblock %}
 {% block content %}
     <div class="jumbotron jumbotron-fluid">
@@ -23,8 +23,8 @@
                         <p><b>{{ forloop.counter }}. {{ task.summary }} created at {{ task.created_at|date:'d.m.Y H:i:s' }}</b></p>
                         <div class="pre">{{ task.description }}</div>
                         <p class="task-links">
-                            <a href="{% url 'task_update' task.pk %}">Edit</a>
-                            <a href="{% url 'task_delete' task.pk %}">Delete</a>
+                            <a href="{% url 'webapp:task_update' task.pk %}">Edit</a>
+                            <a href="{% url 'webapp:task_delete' task.pk %}">Delete</a>
                         </p>
                     </div>
                 {% empty %}
@@ -34,7 +34,7 @@
             {% if is_paginated %}
                 {% include 'partial/pagination.html' %}
             {% endif %}
-            <form action="{% url 'project_task_create' project.pk %}" method="POST" id="task_add">
+            <form action="{% url 'webapp:project_task_create' project.pk %}" method="POST" id="task_add">
                 {% include 'partial/form.html' with button_text='Add' %}
             </form>
         </div>

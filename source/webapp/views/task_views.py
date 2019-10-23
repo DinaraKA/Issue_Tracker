@@ -45,19 +45,6 @@ class IndexView(ListView):
         return None
 
 
-# class SearchView(ListView):
-#     model = Task
-#     template_name = 'task/index.html'
-#
-#     def get_queryset(self):
-#         query = self.request.GET.get('q')
-#         context = Task.objects.filter(
-#             Q(summary__icontains=query)
-#                 | Q(description__icontains=query)
-#             )
-#         return context
-
-
 class TaskView(DetailView):
     context_object_name = 'task'
     model = Task
@@ -71,7 +58,7 @@ class TaskCreateView(CreateView):
     form_class = TaskForm
 
     def get_success_url(self):
-        return reverse('task_view', kwargs={'pk': self.object.pk})
+        return reverse('webapp:task_view', kwargs={'pk': self.object.pk})
 
 
 class TaskProjectCreateView(CreateView):
@@ -82,7 +69,7 @@ class TaskProjectCreateView(CreateView):
         project_pk = self.kwargs.get('pk')
         project = get_object_or_404(Project, pk=project_pk)
         project.tasks.create(**form.cleaned_data)
-        return redirect('project_view', pk=project_pk)
+        return redirect('webapp:project_view', pk=project_pk)
 
 
 class TaskUpdateView(UpdateView):
@@ -92,14 +79,14 @@ class TaskUpdateView(UpdateView):
     context_object_name = 'task'
 
     def get_success_url(self):
-        return reverse('task_view', kwargs={'pk': self.object.pk})
+        return reverse('webapp:task_view', kwargs={'pk': self.object.pk})
 
 
 class TaskDeleteView(DeleteView):
     model = Task
     context_object_name = 'task'
     template_name = 'task/delete.html'
-    success_url = reverse_lazy('index')
+    success_url = reverse_lazy('webapp:index')
 
 
 

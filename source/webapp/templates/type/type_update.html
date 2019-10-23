@@ -2,7 +2,7 @@
 {% block title %}Update Type{% endblock %}
 {% block content %}
     <h1>Update Type</h1>
-    <form method="POST" action="{% url "type_update" type.pk %}">
+    <form method="POST" action="{% url "webapp:type_update" type.pk %}">
         {% include 'partial/form.html' with button_text="Update" %}
     </form>
 {% endblock %}
