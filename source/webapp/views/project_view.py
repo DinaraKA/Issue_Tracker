@@ -72,6 +72,11 @@ class ProjectCreateView(CreateView):
     template_name = 'project/project-create.html'
     form_class = ProjectForm
 
+    def dispatch(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            return redirect('accounts:login')
+        return super().dispatch(request, *args, **kwargs)
+
     def get_success_url(self):
         return reverse('webapp:project_index')
 
@@ -81,6 +86,11 @@ class ProjectUpdateView(UpdateView):
     template_name = 'project/project_update.html'
     form_class = ProjectForm
     context_object_name = 'project'
+
+    def dispatch(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            return redirect('accounts:login')
+        return super().dispatch(request, *args, **kwargs)
 
     def get_success_url(self):
         return reverse('webapp:project_view', kwargs={'pk': self.object.pk})
@@ -95,6 +105,11 @@ class ProjectDeleteView(DeleteView):
             return self.delete(request, *args, **kwargs)
         except ProtectedError:
             return render(request, self.template_name)
+
+    def dispatch(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            return redirect('accounts:login')
+        return super().dispatch(request, *args, **kwargs)
 
     def get_success_url(self):
         return reverse('webapp:project_index')
