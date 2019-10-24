@@ -34,7 +34,11 @@ class IndexView(ListView):
             queryset = queryset.filter(
                 Q(summary__icontains=self.search_query)
                 | Q(description__icontains=self.search_query)
+<<<<<<< HEAD
             )
+=======
+            ).distinct()
+>>>>>>> Added style to base and login pages, correct url path in task delete page, add distinct to filter in simple search function in task Listview
         return queryset
 
     def get_search_form(self):
