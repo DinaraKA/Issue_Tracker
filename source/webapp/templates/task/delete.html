@@ -12,7 +12,7 @@
                 <p class="lead">{{ task.summary }}</p>
                 <hr class="my-4">
                 <button type="submit" class="btn btn-dark" value="Подтвердить">Yes</button>
-                <button type="submit" class="btn btn-dark" value="Submit"><a href="{% url 'task_view' task.pk %}">No</a></button>
+                <button type="submit" class="btn btn-dark" value="Submit"><a href="{% url 'webapp:task_view' task.pk %}">No</a></button>
             </form>
         </div>
     </div>

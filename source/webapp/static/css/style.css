@@ -35,16 +35,22 @@ h3 {
     line-height: 1;
     padding: 0;
     margin: 0;
-    display: inline-block;
+    display: block;
+    color: #fffee8;
+}
+
+.menu-right{
+    float: right;
+    text-align: end;
     color: #fffee8;
 }
 
 .menu li {
-    display: inline-block;
+    display: inline;
 }
 
 .menu a {
-    display: inline-block;
+    display: inline-flex;
     text-decoration: none;
     color: inherit;
     padding: 5px 15px;
