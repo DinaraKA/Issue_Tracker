@@ -39,12 +39,6 @@ h3 {
     color: #fffee8;
 }
 
-.menu-right{
-    float: right;
-    text-align: end;
-    color: #fffee8;
-}
-
 .menu li {
     display: inline;
 }

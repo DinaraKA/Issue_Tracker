@@ -21,10 +21,11 @@
             <li><a href="{% url 'webapp:type_index' %}">Types</a></li>
             {% block menu %}{% endblock %}
             {% if user.is_authenticated %}
-                <li class="menu-right"><a href="{% url 'accounts:logout' %}" class="nav-link">Sign out</a></li>
-                <li class="menu-right" style="margin: 5px 20px; color: darkblue;">Hello, {{ user.username }}!</li>
+                <li><a href="{% url 'accounts:logout' %}" class="nav-link">Log out</a></li>
+                <li style="margin: 5px 20px; color: darkblue;">Hello, {{ user.username }}!</li>
             {% else %}
-                <li class="menu-right"><a href="{% url 'accounts:login' %}" class="nav-link">Sign in</a></li>
+                <li><a href="{% url 'accounts:login' %}" class="nav-link">Log in</a></li>
+                <li><a href="{% url 'accounts:register' %}">Sign up</a></li>
             {% endif %}
         </ul>
     </div>
