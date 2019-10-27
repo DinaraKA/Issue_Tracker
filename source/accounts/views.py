@@ -2,7 +2,10 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
+from django.urls import reverse
 from accounts.forms import UserCreationForm
+from accounts.models import Token
+from main.settings import HOST_NAME
 
 
 def login_view(request):
@@ -36,11 +39,31 @@ def register_view(request):
     elif request.method == 'POST':
         form = UserCreationForm(data=request.POST)
         if form.is_valid():
-            user = User(username=form.cleaned_data['username'])
+            user = User(
+                username=form.cleaned_data['username'],
+                email=form.cleaned_data['email'],
+                is_active=False
+            )
             user.set_password(form.cleaned_data['password'])
             user.save()
-            login(request, user)
+            token = Token.objects.create(user=user)
+            activation_url= HOST_NAME + reverse('accounts:user_activate') + '?token={}'.format(token)
+            user.email_user('Registration on site localhost', 'For activation go to link: {}'.format(activation_url))
             return redirect('webapp:index')
         else:
             return render(request, 'register.html', {'form':form})
+
+
+def user_activate(request):
+    token_value = request.GET.get('token')
+    try:
+        token = Token.objects.get(token=token_value)
+        user = token.user
+        user.is_active = True
+        user.save()
+        token.delete()
+        login(request, user)
+        return redirect('webapp:index')
+    except Token.DoesNotExist:
+        return redirect('webapp:index')
 
