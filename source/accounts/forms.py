@@ -9,6 +9,18 @@ class UserCreationForm(forms.Form):
                                widget=forms.PasswordInput)
     password_confirm = forms.CharField(max_length=100, label='Password Comfirm', required=True,
                                widget=forms.PasswordInput)
+    email = forms.EmailField(label='Email', required=True)
+
+
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        try:
+            User.objects.get(email=email)
+            raise ValidationError('User with this email already exists',
+                                  code='user_email_exists')
+        except User.DoesNotExist:
+            return email
+
 
     def clean_username(self):
         username=self.cleaned_data.get('username')
