@@ -40,9 +40,11 @@ def register_view(request):
         form = UserCreationForm(data=request.POST)
         if form.is_valid():
             user = User(
+                first_name=form.cleaned_data['first_name'],
+                last_name=form.cleaned_data['last_name'],
                 username=form.cleaned_data['username'],
-                email=form.cleaned_data['email'],
-                is_active=False
+                email=form.cleaned_data['email']
+                # is_active=False
             )
             user.set_password(form.cleaned_data['password'])
             user.save()
