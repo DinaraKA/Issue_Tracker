@@ -1,6 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
+from django.views.generic import DetailView
 from django.contrib.auth.models import User
 from django.urls import reverse
 from accounts.forms import UserCreationForm
@@ -69,3 +70,8 @@ def user_activate(request):
     except Token.DoesNotExist:
         return redirect('webapp:index')
 
+
+class UserDetailView(DetailView):
+    model = User
+    template_name = 'user_detail.html'
+    context_object_name = 'user_object'

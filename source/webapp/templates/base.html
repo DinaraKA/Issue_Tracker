@@ -22,8 +22,8 @@
             {% block menu %}{% endblock %}
             <li class="menu-right">
                 <ul>
-                    {% if user.is_authenticated %}
-                        <li style="color: darkblue;">Hello, {{ user.username }}!</li>
+                    {% if request.user.is_authenticated %}
+                        <li style="color: darkblue;">Hello, <a href="{%  url 'accounts:user_detail' request.user.pk %}">{{request.user}}!</a></li>
                         <li><a href="{% url 'accounts:logout' %}">Log out</a></li>
                     {% else %}
                         <li><a href="{% url 'accounts:login' %}">Log in</a></li>
