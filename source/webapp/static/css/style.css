@@ -18,7 +18,7 @@ h3 {
     margin: 0 auto;
 }
 
-.navbar {
+.navbar-my {
     display: block;
     background: #6a7dff;
     position: fixed;
@@ -40,11 +40,11 @@ h3 {
 }
 
 .menu li {
-    display: inline;
+    display: inline-block;
 }
 
 .menu a {
-    display: inline-flex;
+    display: inline-block;
     text-decoration: none;
     color: inherit;
     padding: 5px 15px;
@@ -53,6 +53,10 @@ h3 {
 .menu a:hover {
     color: darkblue;
     text-decoration: underline;
+}
+
+.menu-right{
+    float: right;
 }
 
 .search {

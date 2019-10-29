@@ -12,7 +12,7 @@
     {% block styles %}{% endblock %}
 </head>
 <body>
-<nav class="navbar">
+<nav class="navbar-my">
     <div class="container">
         <ul class="menu">
             <li><a href="{% url 'webapp:index' %}">Home</a></li>
@@ -20,13 +20,17 @@
             <li><a href="{% url 'webapp:status_index' %}">Statuses</a></li>
             <li><a href="{% url 'webapp:type_index' %}">Types</a></li>
             {% block menu %}{% endblock %}
-            {% if user.is_authenticated %}
-                <li style="margin: 5px 20px; color: darkblue;">Hello, {{ user.username }}!</li>
-                <li><a href="{% url 'accounts:logout' %}" class="nav-link">Log out</a></li>
-            {% else %}
-                <li><a href="{% url 'accounts:login' %}" class="nav-link">Log in</a></li>
-                <li><a href="{% url 'accounts:register' %}">Sign up</a></li>
-            {% endif %}
+            <li class="menu-right">
+                <ul>
+                    {% if user.is_authenticated %}
+                        <li style="color: darkblue;">Hello, {{ user.username }}!</li>
+                        <li><a href="{% url 'accounts:logout' %}">Log out</a></li>
+                    {% else %}
+                        <li><a href="{% url 'accounts:login' %}">Log in</a></li>
+                        <li><a href="{% url 'accounts:register' %}">Sign up</a></li>
+                    {% endif %}
+                </ul>
+            </li>
         </ul>
     </div>
 </nav>
