@@ -52,6 +52,16 @@ class UserCreationForm(forms.Form):
 
 
 class UserInfoChangeForm(forms.ModelForm):
+    def clean(self):
+        super().clean()
+        first_name = self.cleaned_data.get('first_name')
+        last_name = self.cleaned_data.get('last_name')
+        if not first_name and not last_name:
+            raise ValidationError('First name or last name should be filled',
+                                  code='no_first_and_last_name')
+        return self.cleaned_data
+
+
     class Meta:
         model = User
         fields = ['first_name', 'last_name', 'email']
