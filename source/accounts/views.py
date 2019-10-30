@@ -1,10 +1,11 @@
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import UserPassesTestMixin
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
-from django.views.generic import DetailView
+from django.views.generic import DetailView, UpdateView
 from django.contrib.auth.models import User
 from django.urls import reverse
-from accounts.forms import UserCreationForm
+from accounts.forms import UserCreationForm, UserInfoChangeForm
 from accounts.models import Token
 from main.settings import HOST_NAME
 
@@ -75,3 +76,16 @@ class UserDetailView(DetailView):
     model = User
     template_name = 'user_detail.html'
     context_object_name = 'user_object'
+
+
+class UserInfoChangeView(UserPassesTestMixin, UpdateView):
+    model = User
+    template_name = 'user_update.html'
+    context_object_name = 'user_object'
+    form_class = UserInfoChangeForm
+
+    def test_func(self):
+        return self.get_object() == self.request.user
+
+    def get_success_url(self):
+        return reverse('accounts:user_detail', kwargs={'pk': self.object.pk})

@@ -2,12 +2,12 @@
 {% block title %}{{ user_object.username }}{% endblock %}
 {% block menu %}
     {% if user_object == request.user %}
-        <li><a href="#">Edit Profile</a></li>
+        <li><a href="{% url "accounts:user_update" user_object.pk %}">Edit Profile</a></li>
         <li><a href="#">Change Password</a></li>
     {% endif %}
 {% endblock %}
 {% block content %}
-    <h1>Profile: {{ user_object.username }}</h1>
+    <h2>Profile: {{ user_object.username }}</h2>
     <p>First Name: <b>{{ user_object.first_name }}</b></p>
     <p>Last Name: {{ user_object.last_name }}</p>
     <p>Email: {{ user_object.email }}</p>
