@@ -5,6 +5,8 @@ from django.contrib.auth import authenticate, login, logout
 from django.views.generic import DetailView, UpdateView, ListView
 from django.contrib.auth.models import User
 from django.urls import reverse
+from django.views.generic.edit import FormMixin
+
 from accounts.forms import UserCreationForm, UserInfoChangeForm, UserPasswordChangeForm
 from accounts.models import Token
 from main.settings import HOST_NAME
@@ -27,7 +29,7 @@ def login_view(request):
                 return redirect('webapp:index')
         else:
             context['has_error'] = True
-    return render(request, 'login.html', context=context)
+    return render(request, 'registration/login.html', context=context)
 
 @login_required
 def logout_view(request):
