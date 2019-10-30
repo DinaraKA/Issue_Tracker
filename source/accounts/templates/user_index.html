@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h3>Users</h3>
+    <form method="POST" action="{% url 'accounts:user_index' %}">
+        {% csrf_token %}
+    {% if is_paginated %}
+        {% include 'partial/pagination.html' %}
+    {% endif %}
+        <table class="table">
+            <thead>
+                <tr>
+                   <th scope="col">#</th>
+                   <th scope="col">User Name</th>
+                   <th scope="col">Profile</th>
+                </tr>
+            </thead>
+            {% for user_object in user_objects %}
+                <tbody>
+                    <tr>
+                        <th scope="row">{{ forloop.counter }}</th>
+                        <td>{{ user_object.username }}</td>
+                        <td><a href="{% url 'accounts:user_detail' user_object.pk %}">Details</a></td>
+                    </tr>
+                </tbody>
+            {% endfor %}
+        </table>
+    {% if is_paginated %}
+        {% include 'partial/pagination.html' %}
+    {% endif %}
+    </form>
+{% endblock %}

@@ -2,7 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
-from django.views.generic import DetailView, UpdateView
+from django.views.generic import DetailView, UpdateView, ListView
 from django.contrib.auth.models import User
 from django.urls import reverse
 from accounts.forms import UserCreationForm, UserInfoChangeForm, UserPasswordChangeForm
@@ -72,6 +72,14 @@ def user_activate(request):
         return redirect('webapp:index')
 
 
+class UserIndexView(ListView):
+    context_object_name = 'user_objects'
+    model = User
+    template_name = 'user_index.html'
+    paginate_by = 5
+    paginate_orphans = 1
+
+
 class UserDetailView(DetailView):
     model = User
     template_name = 'user_detail.html'
@@ -100,6 +108,7 @@ class UserPasswordChangeView(UserPassesTestMixin, UpdateView):
     def test_func(self):
         return self.get_object() == self.request.user
 
-
     def get_success_url(self):
         return reverse('accounts:login')
+
+

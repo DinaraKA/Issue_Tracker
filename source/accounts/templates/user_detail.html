@@ -7,8 +7,15 @@
     {% endif %}
 {% endblock %}
 {% block content %}
-    <h2>Profile: {{ user_object.username }}</h2>
-    <p>First Name: <b>{{ user_object.first_name }}</b></p>
-    <p>Last Name: {{ user_object.last_name }}</p>
-    <p>Email: {{ user_object.email }}</p>
+    <div class="card" style="width: 18rem; align-items: center;">
+        <div class="card-body">
+            <h2 class="card-title">Profile: {{ user_object.username }}</h2>
+            <p class="card-text">First Name: <b>{{ user_object.first_name }}</b></p>
+            <p class="card-text">Last Name: {{ user_object.last_name }}</p>
+            <p class="card-text">Email: {{ user_object.email }}</p>
+        </div>
+    </div>
 {% endblock %}
+
+
+

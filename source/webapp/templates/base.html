@@ -23,6 +23,7 @@
             <li class="menu-right">
                 <ul>
                     {% if request.user.is_authenticated %}
+                        <li><a href="{% url 'accounts:user_index' %}">Users</a></li>
                         <li style="color: darkblue;">Hello, <a href="{%  url 'accounts:user_detail' request.user.pk %}">{{request.user}}!</a></li>
                         <li><a href="{% url 'accounts:logout' %}">Log out</a></li>
                     {% else %}
