@@ -3,7 +3,7 @@
     <li><a href="{% url 'webapp:task_add' %}">Add Task</a></li>
 {% endblock %}
 {% block content %}
-    <h2>Issues</h2>
+    <h1>Issues</h1>
     {% include 'partial/simple_search.html' %}
     <form method="POST" action="{% url 'webapp:index' %}">
         {% csrf_token %}

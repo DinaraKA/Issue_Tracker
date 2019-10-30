@@ -2,7 +2,7 @@
 {% block title %}Update Task{% endblock %}
 
 {% block content %}
-    <h1>Update Task</h1>
+    <h2>Update Task</h2>
     <form method="POST" action="{% url "webapp:task_update" task.pk %}">
         {% include 'partial/form.html' with button_text="Update" %}
     </form>

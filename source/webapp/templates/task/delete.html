@@ -6,7 +6,7 @@
 {% block content %}
     <div class="jumbotron jumbotron-fluid">
         <div class="container">
-            <h2>Are you sure want to delete task?</h2>
+            <h3>Are you sure want to delete task?</h3>
             <form method="POST" action="{% url "webapp:task_delete" task.pk %}" class="text-center">
                 {% csrf_token %}
                 <p class="lead">{{ task.summary }}</p>

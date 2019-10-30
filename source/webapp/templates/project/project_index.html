@@ -3,7 +3,7 @@
     <li><a href="{% url 'webapp:project_add' %}">Add Project</a></li>
 {% endblock %}
 {% block content %}
-    <h3>Projects</h3>
+    <h2>Projects</h2>
     {% include 'partial/simple_search.html' %}
     <form method="POST" action="{% url 'webapp:project_index' %}">
         {% csrf_token %}
