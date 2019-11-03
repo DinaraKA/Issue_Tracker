@@ -65,9 +65,13 @@ class UserInfoChangeForm(forms.ModelForm):
         super().clean()
         first_name = self.cleaned_data.get('first_name')
         last_name = self.cleaned_data.get('last_name')
+        valid_url = self.cleaned_data.get('github')
         if not first_name and not last_name:
             raise ValidationError('First name or last name should be filled',
                                   code='no_first_and_last_name')
+        if not 'https://github.com' in valid_url:
+            raise ValidationError('This is not github url', code='wrong url')
+
         return self.cleaned_data
 
     def get_initial_for_field(self, field, field_name):
@@ -87,6 +91,8 @@ class UserInfoChangeForm(forms.ModelForm):
         if commit:
             profile.save()
         return profile
+
+
 
     class Meta:
         model = User

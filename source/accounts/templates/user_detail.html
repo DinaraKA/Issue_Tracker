@@ -23,7 +23,7 @@
                     <p class="card-text">Last Name: {{ user_object.last_name }}</p>
                     <p class="card-text">About User: {{ user_object.profile.about_user }}</p>
                     <p class="card-text">Email: {{ user_object.email }}</p>
-                    <p class="card-text">GitHub: {{ user_object.profile.github }}</p>
+                    <p class="card-text">GitHub: <a href="{{ user_object.profile.github }}">{{ user_object.profile.github }}</a></p>
                 </div>
             </div>
         </div>
