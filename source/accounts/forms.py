@@ -1,6 +1,9 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
+from django.forms import widgets
+
+from accounts.models import Profile
 
 
 class UserCreationForm(forms.Form):
@@ -52,6 +55,12 @@ class UserCreationForm(forms.Form):
 
 
 class UserInfoChangeForm(forms.ModelForm):
+    avatar = forms.ImageField(label='Avatar', required=False)
+    about_user = forms.CharField(max_length=2000, required=False, label='About User',
+                           widget=widgets.Textarea)
+    github = forms.URLField(label='GitHub', required=False)
+
+
     def clean(self):
         super().clean()
         first_name = self.cleaned_data.get('first_name')
@@ -61,10 +70,30 @@ class UserInfoChangeForm(forms.ModelForm):
                                   code='no_first_and_last_name')
         return self.cleaned_data
 
+    def get_initial_for_field(self, field, field_name):
+        if field_name in self.Meta.profile_fields:
+            return getattr(self.instance.profile, field_name)
+        return super().get_initial_for_field(field, field_name)
+
+    def save(self, commit=True):
+        user = super().save(commit=commit)
+        user.profile = self.save_profile(commit)
+        return user
+
+    def save_profile(self, commit=True):
+        profile, _ = Profile.objects.get_or_create(user=self.instance)
+        for field in self.Meta.profile_fields:
+            setattr(profile, field, self.cleaned_data.get(field))
+        if not profile.avatar:
+            profile.avatar = None
+        if commit:
+            profile.save()
+        return profile
 
     class Meta:
         model = User
         fields = ['first_name', 'last_name', 'email']
+        profile_fields =['avatar', 'about_user', 'github']
 
 
 class UserPasswordChangeForm(forms.ModelForm):

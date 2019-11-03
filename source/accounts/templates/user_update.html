@@ -8,7 +8,7 @@
 {% endblock %}
 {% block content %}
     <h2>Edit Profile: {{ user_object.username }}</h2>
-    <form action="{% url 'accounts:user_update' user_object.pk %}" method="post">
+    <form action="{% url 'accounts:user_update' user_object.pk %}" method="post" enctype="multipart/form-data">
         {% include 'partial/form.html' with button_text="Update" %}
     </form>
 {% endblock %}
