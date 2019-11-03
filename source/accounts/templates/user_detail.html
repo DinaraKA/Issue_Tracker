@@ -10,9 +10,16 @@
     <div class="card" style="width: 18rem; align-items: center;">
         <div class="card-body">
             <h2 class="card-title">Profile: {{ user_object.username }}</h2>
+            {% if user_object.profile.avatar %}
+                <img src="{{ user_object.profile.avatar.url }}" class="card-img-top" alt="user picture">
+{#          {% else %}
+                <img src="default_avatar.png" class="card-img-top" alt="default avatar">
+            {% endif %}
             <p class="card-text">First Name: <b>{{ user_object.first_name }}</b></p>
             <p class="card-text">Last Name: {{ user_object.last_name }}</p>
+            <p class="card-text">About User: {{ user_object.profile.about_user }}</p>
             <p class="card-text">Email: {{ user_object.email }}</p>
+            <p class="card-text">GitHub: {{ user_object.profile.github }}</p>
         </div>
     </div>
 {% endblock %}
