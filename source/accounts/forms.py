@@ -84,8 +84,6 @@ class UserInfoChangeForm(forms.ModelForm):
         profile, _ = Profile.objects.get_or_create(user=self.instance)
         for field in self.Meta.profile_fields:
             setattr(profile, field, self.cleaned_data.get(field))
-        if not profile.avatar:
-            profile.avatar = None
         if commit:
             profile.save()
         return profile

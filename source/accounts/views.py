@@ -5,10 +5,8 @@ from django.contrib.auth import authenticate, login, logout
 from django.views.generic import DetailView, UpdateView, ListView
 from django.contrib.auth.models import User
 from django.urls import reverse
-from django.views.generic.edit import FormMixin
-
 from accounts.forms import UserCreationForm, UserInfoChangeForm, UserPasswordChangeForm
-from accounts.models import Token
+from accounts.models import Token, Profile
 from main.settings import HOST_NAME
 
 
@@ -52,6 +50,7 @@ def register_view(request):
             )
             user.set_password(form.cleaned_data['password'])
             user.save()
+            Profile.objects.create(user=user)
             token = Token.objects.create(user=user)
             activation_url= HOST_NAME + reverse('accounts:user_activate') + '?token={}'.format(token)
             user.email_user('Registration on site localhost', 'For activation go to link: {}'.format(activation_url))
