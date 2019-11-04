@@ -1,10 +1,10 @@
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.db.models import Q
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse, reverse_lazy
 from django.utils.http import urlencode
 from django.views.generic import ListView, DetailView, CreateView, UpdateView,DeleteView
-from webapp.models import Task, Project
+from webapp.models import Task, Project, Team
 from webapp.forms import TaskForm, ProjectTaskForm, SimpleSearchForm
 
 
@@ -53,7 +53,7 @@ class TaskView(DetailView):
     template_name = 'task/task.html'
 
 
-class TaskCreateView(LoginRequiredMixin, CreateView):
+class TaskCreateView(LoginRequiredMixin, UserPassesTestMixin,  CreateView):
     model = Task
     template_name = 'task/create.html'
     form_class = TaskForm
@@ -73,7 +73,7 @@ class TaskProjectCreateView(LoginRequiredMixin, CreateView):
         return redirect('webapp:project_view', pk=project_pk)
 
 
-class TaskUpdateView(LoginRequiredMixin, UpdateView):
+class TaskUpdateView(UserPassesTestMixin, UpdateView):
     model = Task
     template_name = 'task/update.html'
     form_class = TaskForm
@@ -82,8 +82,18 @@ class TaskUpdateView(LoginRequiredMixin, UpdateView):
     def get_success_url(self):
         return reverse('webapp:task_view', kwargs={'pk': self.object.pk})
 
+    def test_func(self, **kwargs):
+        task = Task.objects.get(pk=self.kwargs.get('pk'))
+        project = Project.objects.get(pk=task.project.pk)
+        team = Team.objects.filter(project=project).distinct()
+        user_pk_list = team.values_list('user_id', flat=True)
+        if self.request.user.pk in user_pk_list:
+            return True
+        else:
+            return False
 
-class TaskDeleteView(LoginRequiredMixin, DeleteView):
+
+class TaskDeleteView(UserPassesTestMixin, DeleteView):
     model = Task
     context_object_name = 'task'
     template_name = 'task/delete.html'
