@@ -197,7 +197,7 @@
   "pk": 1,
   "fields": {
     "password": "pbkdf2_sha256$150000$EfX5DbkNwqf6$GOmqXTZL8JrA5VlY+QkGgx7ymY5f7djWt99WYz927Dc=",
-    "last_login": "2019-10-30T19:44:12.725Z",
+    "last_login": "2019-11-04T11:17:22.058Z",
     "is_superuser": true,
     "username": "admin",
     "first_name": "Admin",
@@ -233,7 +233,7 @@
   "pk": 31,
   "fields": {
     "password": "pbkdf2_sha256$150000$36ACAM6Wjov1$/fObe/mTfSVpWS/yvlD+PUx7d0wIUIU7WcQrMhwOUNo=",
-    "last_login": "2019-10-30T07:32:26.463Z",
+    "last_login": "2019-11-04T10:53:47.375Z",
     "is_superuser": false,
     "username": "bob",
     "first_name": "Bob",
@@ -244,6 +244,56 @@
     "date_joined": "2019-10-30T07:31:51.724Z",
     "groups": [],
     "user_permissions": []
+  }
+},
+{
+  "model": "webapp.team",
+  "pk": 1,
+  "fields": {
+    "user": 1,
+    "project": 1,
+    "began_at": "2019-11-03T17:47:38.327Z",
+    "ended_at": "2019-11-03T17:47:38.327Z"
+  }
+},
+{
+  "model": "webapp.team",
+  "pk": 2,
+  "fields": {
+    "user": 30,
+    "project": 1,
+    "began_at": "2019-11-03T17:48:00.909Z",
+    "ended_at": "2019-11-03T17:48:00.909Z"
+  }
+},
+{
+  "model": "webapp.team",
+  "pk": 4,
+  "fields": {
+    "user": 31,
+    "project": 2,
+    "began_at": "2019-11-03T17:48:19.901Z",
+    "ended_at": "2019-11-03T17:48:19.901Z"
+  }
+},
+{
+  "model": "webapp.team",
+  "pk": 5,
+  "fields": {
+    "user": 30,
+    "project": 3,
+    "began_at": "2019-11-03T17:48:29.892Z",
+    "ended_at": "2019-11-03T17:48:29.892Z"
+  }
+},
+{
+  "model": "webapp.team",
+  "pk": 6,
+  "fields": {
+    "user": 31,
+    "project": 3,
+    "began_at": "2019-11-03T17:48:37.303Z",
+    "ended_at": "2019-11-03T17:48:37.303Z"
   }
 }
 ]
