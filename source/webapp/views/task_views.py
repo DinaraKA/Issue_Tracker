@@ -100,4 +100,13 @@ class TaskDeleteView(UserPassesTestMixin, DeleteView):
     success_url = reverse_lazy('webapp:index')
 
 
+    def test_func(self, **kwargs):
+        task = Task.objects.get(pk=self.kwargs.get('pk'))
+        project = Project.objects.get(pk=task.project.pk)
+        team = Team.objects.filter(project=project).distinct()
+        user_pk_list = team.values_list('user_id', flat=True)
+        if self.request.user.pk in user_pk_list:
+            return True
+        else:
+            return False
 
