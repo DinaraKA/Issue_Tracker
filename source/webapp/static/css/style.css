@@ -73,6 +73,14 @@ table a{
     box-shadow: red 0 0 3px;
 }
 
+.form-error {
+	background: #f0d2ac;
+	border: solid red;
+    padding: 15px ;
+	color: black;
+    height: 100px;
+}
+
 .form-required {
     color: red;
     font-weight: bold;
@@ -120,3 +128,4 @@ table a{
 .pre {
     white-space: pre-wrap;
 }
+
