@@ -14,8 +14,8 @@ class ProjectAdmin(admin.ModelAdmin):
     list_display_links = ['name']
 
 class TeamAdmin(admin.ModelAdmin):
-    list_display = ['pk', 'user', 'project']
-    list_filter = ['user', 'project']
+    list_display = ['pk', 'user', 'project', 'start', 'end']
+    list_filter = ['user', 'project', 'start', 'end']
 
 
 admin.site.register(Task, TaskAdmin)

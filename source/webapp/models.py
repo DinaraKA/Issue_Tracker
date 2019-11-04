@@ -45,8 +45,8 @@ class Task(models.Model):
 class Team(models.Model):
     user = models.ForeignKey(User, related_name='user_team', on_delete=models.PROTECT, verbose_name='User')
     project = models.ForeignKey(Project, related_name='project_team', on_delete=models.PROTECT, verbose_name='Project')
-    began_at = models.DateTimeField(auto_now_add=True, verbose_name='Began job')
-    ended_at = models.DateTimeField(auto_now=True, verbose_name='Ended job')
+    start = models.DateField(null=True, blank=True, verbose_name='Start')
+    end = models.DateField(null=True, blank=True, verbose_name='End')
 
     def __str__(self):
         return '{}, {}'.format(self.user, self.project)
