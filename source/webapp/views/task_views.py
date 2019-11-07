@@ -101,11 +101,17 @@ class TaskUpdateView(UserPassesTestMixin, UpdateView):
     def get_success_url(self):
         return reverse('webapp:task_view', kwargs={'pk': self.object.pk})
 
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        users_list = Team.objects.filter(user__username=self.request.user).values_list('user', flat=None)
+        kwargs['users_list'] = users_list
+        return kwargs
+
+
     def test_func(self, **kwargs):
         task = Task.objects.get(pk=self.kwargs.get('pk'))
         project = Project.objects.get(pk=task.project.pk)
-        team = Team.objects.filter(project=project).distinct()
-        user_pk_list = team.values_list('user_id', flat=True)
+        user_pk_list = Team.objects.filter(project=project, end=None).distinct().values_list('user_id', flat=True)
         if self.request.user.pk in user_pk_list:
             return True
         else:
