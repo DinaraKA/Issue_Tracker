@@ -5,6 +5,10 @@ from webapp.models import Status, Type, Task, Project
 
 
 class TaskForm(forms.ModelForm):
+    def __init__(self, users_list, **kwargs):
+        super().__init__(**kwargs)
+        self.fields['assigned_to'].queryset = User.objects.filter(pk__in=users_list)
+
     class Meta:
         model = Task
         fields = ['summary', 'description', 'project', 'status', 'type', 'assigned_to']

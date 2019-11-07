@@ -8,12 +8,14 @@
     <div class="jumbotron jumbotron-fluid">
         <div class="container">
             <h3>{{ task.summary}}</h3>
+            <p><b>Created by: </b>{{ task.created_by }}</p>
             <p class="pre">{{ task.description }}</p>
             <hr class="my-4">
             <p><b>Project: </b>{{ task.project }}</p>
             <p><b>Status: </b>{{ task.status }}</p>
             <p><b>Type: </b>{{ task.type }}</p>
             <p><b>Created date: </b>{{ task.created_at|date:'Y-m-d H:i:s' }}</p>
+            <p><b>Assigned to: </b>{{ task.assigned_to }}</p>
         </div>
     </div>
 {% endblock %}

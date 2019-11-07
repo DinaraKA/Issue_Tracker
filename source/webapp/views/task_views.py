@@ -1,5 +1,6 @@
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.db.models import Q
+from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse, reverse_lazy
 from django.utils.http import urlencode
@@ -53,13 +54,31 @@ class TaskView(DetailView):
     template_name = 'task/task.html'
 
 
-class TaskCreateView(LoginRequiredMixin, UserPassesTestMixin,  CreateView):
+class TaskCreateView(LoginRequiredMixin, CreateView):
     model = Task
     template_name = 'task/create.html'
     form_class = TaskForm
 
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+        self.object.created_by = self.request.user
+        self.object.save()
+        return HttpResponseRedirect(self.get_success_url())
+
     def get_success_url(self):
         return reverse('webapp:task_view', kwargs={'pk': self.object.pk})
+
+    def get_form(self, form_class=None):
+        form = super().get_form()
+        user_projects_list = Team.objects.filter(user__username=self.request.user).values_list('project', flat=None)
+        form.fields['project'].queryset = Project.objects.filter(pk__in=user_projects_list)
+        return form
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        users_list = Team.objects.filter(user__username=self.request.user).values_list('user', flat=None)
+        kwargs['users_list'] = users_list
+        return kwargs
 
 
 class TaskProjectCreateView(LoginRequiredMixin, CreateView):
@@ -103,7 +122,7 @@ class TaskDeleteView(UserPassesTestMixin, DeleteView):
     def test_func(self, **kwargs):
         task = Task.objects.get(pk=self.kwargs.get('pk'))
         project = Project.objects.get(pk=task.project.pk)
-        team = Team.objects.filter(project=project).distinct()
+        team = Team.objects.filter(project=project, end=None).distinct()
         user_pk_list = team.values_list('user_id', flat=True)
         if self.request.user.pk in user_pk_list:
             return True

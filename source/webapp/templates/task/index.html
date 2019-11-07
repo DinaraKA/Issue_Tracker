@@ -14,11 +14,13 @@
             <thead>
                 <tr>
                    <th scope="col">#</th>
-                   <th scope="col" style="text-align: center">Summary</th>
-                   <th scope="col" style="width: 150px">Project</th>
+                   <th scope="col" style="text-align: center; width: 30%">Summary</th>
+                   <th scope="col" style="width: 10%">Project</th>
                    <th scope="col">Status</th>
                    <th scope="col">Type</th>
+                   <th scope="col">Created By</th>
                    <th scope="col">Created Date</th>
+                   <th scope="col">Assigned To</th>
                 </tr>
             </thead>
             {% for task in tasks %}
@@ -29,7 +31,9 @@
                         <td>{{ task.project }}</td>
                         <td>{{ task.status }}</td>
                         <td>{{ task.type }}</td>
+                        <td>{{ task.created_by }}</td>
                         <td>{{ task.created_at|date:'D, d M Y G:i:s'}}</td>
+                        <td>{{ task.assigned_to }}</td>
                     </tr>
                 </tbody>
             {% endfor %}
