@@ -37,6 +37,8 @@ class Task(models.Model):
     project = models.ForeignKey(Project, null=True, related_name='tasks', on_delete=models.PROTECT,verbose_name='Project')
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Created date')
     updated_at = models.DateTimeField(auto_now=True, verbose_name='Updated date')
+    created_by = models.ForeignKey(User, null=True, blank=True, related_name='task_created_by', on_delete=models.CASCADE, verbose_name='Created by')
+    assigned_to = models.ForeignKey(User, null=True, blank=True, related_name='task_assigned_to', on_delete=models.CASCADE, verbose_name='Assigned to')
 
     def __str__(self):
         return self.summary

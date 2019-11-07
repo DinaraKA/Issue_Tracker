@@ -3,8 +3,8 @@ from webapp.models import Task, Status, Type, Project, Team
 
 
 class TaskAdmin(admin.ModelAdmin):
-    list_display = ['pk', 'summary', 'description', 'project', 'status', 'type', 'created_at', 'updated_at']
-    list_filter = ['project', 'status', 'type']
+    list_display = ['pk', 'summary', 'description', 'project', 'status', 'type', 'created_by', 'assigned_to', 'created_at', 'updated_at']
+    list_filter = ['project', 'status', 'type', 'created_by', 'assigned_to']
     list_display_links = ['pk', 'summary', 'description']
 
 
@@ -16,6 +16,7 @@ class ProjectAdmin(admin.ModelAdmin):
 class TeamAdmin(admin.ModelAdmin):
     list_display = ['pk', 'user', 'project', 'start', 'end']
     list_filter = ['user', 'project', 'start', 'end']
+    list_display_links = ['user']
 
 
 admin.site.register(Task, TaskAdmin)
