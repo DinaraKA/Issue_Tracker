@@ -20,8 +20,9 @@
                 {% for task in tasks %}
                     <hr>
                     <div class="task">
-                        <p><b>{{ forloop.counter }}. {{ task.summary }} created at {{ task.created_at|date:'d.m.Y H:i:s' }}</b></p>
+                        <p><b>{{ forloop.counter }}. {{ task.summary }} created by - {{ task.created_by }}, created at {{ task.created_at|date:'d.m.Y H:i:s' }}</b></p>
                         <div class="pre">{{ task.description }}</div>
+                        <div>Assigned to: {{ task.assigned_to }}</div>
                         <p class="task-links">
                             <a href="{% url 'webapp:task_update' task.pk %}">Edit</a>
                             <a href="{% url 'webapp:task_delete' task.pk %}">Delete</a>

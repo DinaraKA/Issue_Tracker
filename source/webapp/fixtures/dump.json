@@ -245,55 +245,5 @@
     "groups": [],
     "user_permissions": []
   }
-},
-{
-  "model": "webapp.team",
-  "pk": 1,
-  "fields": {
-    "user": 1,
-    "project": 1,
-    "began_at": "2019-11-03T17:47:38.327Z",
-    "ended_at": "2019-11-03T17:47:38.327Z"
-  }
-},
-{
-  "model": "webapp.team",
-  "pk": 2,
-  "fields": {
-    "user": 30,
-    "project": 1,
-    "began_at": "2019-11-03T17:48:00.909Z",
-    "ended_at": "2019-11-03T17:48:00.909Z"
-  }
-},
-{
-  "model": "webapp.team",
-  "pk": 4,
-  "fields": {
-    "user": 31,
-    "project": 2,
-    "began_at": "2019-11-03T17:48:19.901Z",
-    "ended_at": "2019-11-03T17:48:19.901Z"
-  }
-},
-{
-  "model": "webapp.team",
-  "pk": 5,
-  "fields": {
-    "user": 30,
-    "project": 3,
-    "began_at": "2019-11-03T17:48:29.892Z",
-    "ended_at": "2019-11-03T17:48:29.892Z"
-  }
-},
-{
-  "model": "webapp.team",
-  "pk": 6,
-  "fields": {
-    "user": 31,
-    "project": 3,
-    "began_at": "2019-11-03T17:48:37.303Z",
-    "ended_at": "2019-11-03T17:48:37.303Z"
-  }
 }
 ]
