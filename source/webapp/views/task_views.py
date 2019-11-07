@@ -1,4 +1,5 @@
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.contrib.auth.models import User
 from django.db.models import Q
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect
@@ -88,9 +89,15 @@ class TaskProjectCreateView(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         project_pk = self.kwargs.get('pk')
         project = get_object_or_404(Project, pk=project_pk)
-        project.tasks.create(**form.cleaned_data)
+        project.tasks.create(created_by = self.request.user, **form.cleaned_data)
         return redirect('webapp:project_view', pk=project_pk)
 
+    def get_form(self, form_class=None):
+        form = super().get_form()
+        users_list = Team.objects.filter(user__username=self.request.user).values_list('user', flat=None)
+        print(users_list)
+        form.fields['assigned_to'].queryset = User.objects.filter(pk__in=users_list)
+        return form
 
 class TaskUpdateView(UserPassesTestMixin, UpdateView):
     model = Task
