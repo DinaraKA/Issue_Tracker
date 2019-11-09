@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.forms import widgets
-from webapp.models import Status, Type, Task, Project
+from webapp.models import Status, Type, Task, Project, Team
 
 
 class TaskForm(forms.ModelForm):
@@ -31,6 +31,11 @@ class TypeForm(forms.ModelForm):
 
 
 class ProjectTaskForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        self.users = kwargs.pop('users')
+        super().__init__(*args, **kwargs)
+        self.fields['assigned_to'].queryset = self.users
+
     class Meta:
         model = Task
         fields = ['summary', 'description', 'status', 'type', 'assigned_to']

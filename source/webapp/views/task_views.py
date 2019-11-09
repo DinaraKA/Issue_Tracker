@@ -83,8 +83,14 @@ class TaskCreateView(LoginRequiredMixin, CreateView):
 
 
 class TaskProjectCreateView(LoginRequiredMixin, CreateView):
-    template_name = 'task/create.html'
+    template_name = 'task/task_project_create.html'
     form_class = ProjectTaskForm
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        project = Project.objects.get(pk=self.kwargs['pk'])
+        context['project'] = project
+        return context
 
     def form_valid(self, form):
         project_pk = self.kwargs.get('pk')
@@ -92,12 +98,12 @@ class TaskProjectCreateView(LoginRequiredMixin, CreateView):
         project.tasks.create(created_by = self.request.user, **form.cleaned_data)
         return redirect('webapp:project_view', pk=project_pk)
 
-    def get_form(self, form_class=None):
-        form = super().get_form()
-        users_list = Team.objects.filter(user__username=self.request.user).values_list('user', flat=None)
-        print(users_list)
-        form.fields['assigned_to'].queryset = User.objects.filter(pk__in=users_list)
-        return form
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        project = self.kwargs['pk']
+        users_in_project = User.objects.filter(user_team__project=project)
+        kwargs['users'] = users_in_project
+        return kwargs
 
 class TaskUpdateView(UserPassesTestMixin, UpdateView):
     model = Task

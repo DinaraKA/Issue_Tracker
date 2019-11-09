@@ -35,9 +35,7 @@
             {% if is_paginated %}
                 {% include 'partial/pagination.html' %}
             {% endif %}
-            <form action="{% url 'webapp:project_task_create' project.pk %}" method="POST" id="task_add">
-                {% include 'partial/form.html' with button_text='Add' %}
-            </form>
+            <a href="{% url 'webapp:project_task_create' project.pk %}">Add task</a>
         </div>
     </div>
 {% endblock %}
