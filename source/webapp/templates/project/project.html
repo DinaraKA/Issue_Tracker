@@ -15,8 +15,7 @@
                     <p>{{ team.user.username }} - started at {{ team.start|date:'Y-m-d' }}</p>
                 {% endfor %}
             <p class="task-links">
-                <a href="{% url 'webapp:project_add_user' project.pk %}">Add user</a>
-{#                <a href="{% url 'webapp:task_delete' task.pk %}">Delete user</a>#}
+                <a href="{% url 'webapp:project_add_user' project.pk %}">Edit team</a>
             </p>
             <p><b>Created date: </b>{{ project.created_at|date:'Y-m-d H:i:s' }}</p>
             <hr/>

@@ -46,7 +46,18 @@ class ProjectForm(forms.ModelForm):
 
     class Meta:
         model = Project
-        fields =['name', 'description']
+        fields =['name', 'description', 'users']
+
+class ProjectUserForm(forms.ModelForm):
+    users = forms.ModelMultipleChoiceField(queryset=User.objects.all(), required=None, widget=forms.SelectMultiple)
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.fields['users'].initial = self.initial.get('users')
+
+    class Meta:
+        model = Project
+        fields =['users']
 
 
 class SimpleSearchForm(forms.Form):

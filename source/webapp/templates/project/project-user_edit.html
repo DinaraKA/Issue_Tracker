@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}Add user to project{% endblock %}
+{% block content %}
+    <h2>Add user</h2>
+    <h3>Project: {{ project.name}}</h3>
+    <p class="lead">Description: {{ project.description }}</p>
+    <hr class="my-4">
+    <p><b>Users: </b></p>
+        {% for team in team_users %}
+            <p>{{ team.user.username }} - started at {{ team.start|date:'Y-m-d' }}</p>
+        {% endfor %}
+    <form method="POST" action='{% url 'webapp:project_add_user' project.pk %}'>
+        {% include 'partial/form.html' with button_text='Add' %}
+    </form>
+{% endblock %}

@@ -1,5 +1,6 @@
 from datetime import datetime
 
+from django.contrib.auth.models import User
 from django.core.paginator import Paginator
 from django.db.models import ProtectedError, Q
 from django.http import HttpResponseRedirect
@@ -105,6 +106,42 @@ class ProjectUpdateView(UpdateView):
 
     def get_success_url(self):
         return reverse('webapp:project_view', kwargs={'pk': self.object.pk})
+
+
+class ProjectUsersUpdate(UpdateView):
+    model = Project
+    form_class = ProjectUserForm
+    template_name = 'project/project-user_edit.html'
+
+    def get_initial(self):
+        initial = super().get_initial()
+        initial['users'] = User.objects.filter(user_team__project=self.object, user_team__end=None)
+        return initial
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['team_users']= Team.objects.filter(project=self.object, end=None)
+        return context
+
+    def dispatch(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            return redirect('accounts:login')
+        return super().dispatch(request, *args, **kwargs)
+
+    def form_valid(self, form):
+        project_pk = self.kwargs.get('pk')
+        project = get_object_or_404(Project, pk=project_pk)
+        users_list = list(form.cleaned_data.pop('users'))
+        self.object = form.save()
+        project_users = Team.objects.filter(project=project, end=None)
+        for user in users_list:
+            if user not in project_users:
+                Team.objects.create(user=user, project=project, start=datetime.now())
+        for user in project_users:
+            if user not in users_list:
+                user.end = datetime.now()
+                user.save()
+        return redirect('webapp:project_view', pk=project_pk)
 
 
 class ProjectDeleteView(DeleteView):
