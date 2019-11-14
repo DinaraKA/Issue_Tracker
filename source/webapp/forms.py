@@ -42,6 +42,8 @@ class ProjectTaskForm(forms.ModelForm):
 
 
 class ProjectForm(forms.ModelForm):
+    users = forms.ModelMultipleChoiceField(queryset=User.objects.all(), required=None, widget=forms.SelectMultiple)
+
     class Meta:
         model = Project
         fields =['name', 'description']

@@ -1,11 +1,14 @@
+from datetime import datetime
+
 from django.core.paginator import Paginator
 from django.db.models import ProtectedError, Q
-from django.shortcuts import render, redirect
+from django.http import HttpResponseRedirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from django.utils.http import urlencode
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
-from webapp.forms import ProjectTaskForm, ProjectForm, SimpleSearchForm
-from webapp.models import Project
+from webapp.forms import ProjectTaskForm, ProjectForm, SimpleSearchForm, ProjectUserForm
+from webapp.models import Project, Team
 
 class ProjectIndexView(ListView):
     context_object_name = 'projects'
@@ -53,6 +56,7 @@ class ProjectView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         projects = context['project'].tasks.order_by('-created_at')
+        context['team_users']= Team.objects.filter(project=self.object, end=None)
         self.paginate_tasks_to_context(projects, context)
         return context
 
@@ -79,11 +83,19 @@ class ProjectCreateView(CreateView):
     def get_success_url(self):
         return reverse('webapp:project_index')
 
+    def form_valid(self, form):
+        users_list = list(form.cleaned_data.pop('users'))
+        users_list.append(self.request.user)
+        self.object = form.save()
+        for user in users_list:
+            Team.objects.create(user=user, project=self.object, start=datetime.now())
+        return HttpResponseRedirect(self.get_success_url())
+
 
 class ProjectUpdateView(UpdateView):
     model = Project
     template_name = 'project/project_update.html'
-    form_class = ProjectForm
+    fields = ['name', 'description']
     context_object_name = 'project'
 
     def dispatch(self, request, *args, **kwargs):

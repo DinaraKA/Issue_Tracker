@@ -10,6 +10,14 @@
             <h3>Project: {{ project.name}}</h3>
             <p class="lead">{{ project.description }}</p>
             <hr class="my-4">
+            <p><b>Users: </b></p>
+                {% for team in team_users %}
+                    <p>{{ team.user.username }} - started at {{ team.start|date:'Y-m-d' }}</p>
+                {% endfor %}
+            <p class="task-links">
+                <a href="{% url 'webapp:project_add_user' project.pk %}">Add user</a>
+{#                <a href="{% url 'webapp:task_delete' task.pk %}">Delete user</a>#}
+            </p>
             <p><b>Created date: </b>{{ project.created_at|date:'Y-m-d H:i:s' }}</p>
             <hr/>
             <h3>Issues:</h3>
