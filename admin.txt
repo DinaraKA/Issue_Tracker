@@ -1,2 +1,18 @@
-login:admin
-password: admin12345
+1.  login:admin
+    password: admin12345
+
+2.  Project Manager
+    login: dina
+    password: dinaadmin
+
+3.  Team Lead
+    login: alice
+    password: aliceadmin
+
+4.  Developer
+    login: admin2
+    password: admin12345
+
+5.  Developer
+    login: bob
+    password: adminbob

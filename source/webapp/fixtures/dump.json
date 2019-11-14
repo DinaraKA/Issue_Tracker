@@ -62,7 +62,7 @@
     "name": "Issue Tracker",
     "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad asperiores autem commodi, cumque debitis delectus distinctio eligendi enim eum ex fuga in magni nihil, nisi optio quisquam rem sit sunt velit vero? A ab dolores hic iste sapiente? Asperiores corporis eius, eveniet hic incidunt magni praesentium quaerat quos saepe vitae?",
     "created_at": "2019-10-10T07:47:36.806Z",
-    "updated_at": "2019-10-10T11:33:16.322Z",
+    "updated_at": "2019-11-14T09:10:29.278Z",
     "project_status": "active"
   }
 },
@@ -89,97 +89,25 @@
   }
 },
 {
-  "model": "auth.user",
-  "pk": 1,
+  "model": "webapp.project",
+  "pk": 11,
   "fields": {
-    "password": "pbkdf2_sha256$150000$EfX5DbkNwqf6$GOmqXTZL8JrA5VlY+QkGgx7ymY5f7djWt99WYz927Dc=",
-    "last_login": "2019-11-07T12:53:42.767Z",
-    "is_superuser": true,
-    "username": "admin",
-    "first_name": "Admin",
-    "last_name": "Admin",
-    "email": "admin@localhost",
-    "is_staff": true,
-    "is_active": true,
-    "date_joined": "2019-09-24T19:05:33Z",
-    "groups": [],
-    "user_permissions": []
+    "name": "test 10",
+    "description": "",
+    "created_at": "2019-11-13T12:25:22.691Z",
+    "updated_at": "2019-11-13T18:40:47.610Z",
+    "project_status": "active"
   }
 },
 {
-  "model": "auth.user",
-  "pk": 30,
+  "model": "webapp.project",
+  "pk": 12,
   "fields": {
-    "password": "pbkdf2_sha256$150000$sNYS1xTPdw3K$w4VHtB7j2Klb1dKGOh2S3NWi06I8Nvwt2tGC6ECpmcE=",
-    "last_login": "2019-11-07T10:13:26.245Z",
-    "is_superuser": false,
-    "username": "admin2",
-    "first_name": "admin2",
-    "last_name": "",
-    "email": "admin2@localhost",
-    "is_staff": false,
-    "is_active": true,
-    "date_joined": "2019-10-28T08:28:28Z",
-    "groups": [],
-    "user_permissions": []
-  }
-},
-{
-  "model": "auth.user",
-  "pk": 31,
-  "fields": {
-    "password": "pbkdf2_sha256$150000$36ACAM6Wjov1$/fObe/mTfSVpWS/yvlD+PUx7d0wIUIU7WcQrMhwOUNo=",
-    "last_login": "2019-11-07T06:57:40.836Z",
-    "is_superuser": false,
-    "username": "bob",
-    "first_name": "Bob",
-    "last_name": "Smith",
-    "email": "bob@localhost",
-    "is_staff": false,
-    "is_active": true,
-    "date_joined": "2019-10-30T07:31:51Z",
-    "groups": [],
-    "user_permissions": []
-  }
-},
-{
-  "model": "webapp.team",
-  "pk": 2,
-  "fields": {
-    "user": 1,
-    "project": 2,
-    "start": "2019-11-04",
-    "end": null
-  }
-},
-{
-  "model": "webapp.team",
-  "pk": 3,
-  "fields": {
-    "user": 31,
-    "project": 2,
-    "start": "2019-11-04",
-    "end": null
-  }
-},
-{
-  "model": "webapp.team",
-  "pk": 4,
-  "fields": {
-    "user": 30,
-    "project": 3,
-    "start": "2019-11-04",
-    "end": null
-  }
-},
-{
-  "model": "webapp.team",
-  "pk": 5,
-  "fields": {
-    "user": 31,
-    "project": 1,
-    "start": "2019-10-04",
-    "end": null
+    "name": "test24",
+    "description": "",
+    "created_at": "2019-11-13T16:07:40.923Z",
+    "updated_at": "2019-11-14T09:11:55.848Z",
+    "project_status": "active"
   }
 },
 {
@@ -300,6 +228,256 @@
     "updated_at": "2019-11-06T20:44:43.896Z",
     "created_by": 30,
     "assigned_to": 31
+  }
+},
+{
+  "model": "webapp.team",
+  "pk": 2,
+  "fields": {
+    "user": 1,
+    "project": 2,
+    "start": "2019-11-04",
+    "end": null
+  }
+},
+{
+  "model": "webapp.team",
+  "pk": 3,
+  "fields": {
+    "user": 31,
+    "project": 2,
+    "start": "2019-11-04",
+    "end": null
+  }
+},
+{
+  "model": "webapp.team",
+  "pk": 4,
+  "fields": {
+    "user": 30,
+    "project": 3,
+    "start": "2019-11-04",
+    "end": null
+  }
+},
+{
+  "model": "webapp.team",
+  "pk": 5,
+  "fields": {
+    "user": 31,
+    "project": 1,
+    "start": "2019-10-04",
+    "end": "2019-11-14"
+  }
+},
+{
+  "model": "webapp.team",
+  "pk": 18,
+  "fields": {
+    "user": 31,
+    "project": 11,
+    "start": "2019-11-13",
+    "end": null
+  }
+},
+{
+  "model": "webapp.team",
+  "pk": 19,
+  "fields": {
+    "user": 1,
+    "project": 11,
+    "start": "2019-11-13",
+    "end": null
+  }
+},
+{
+  "model": "webapp.team",
+  "pk": 20,
+  "fields": {
+    "user": 31,
+    "project": 12,
+    "start": "2019-11-13",
+    "end": "2019-11-14"
+  }
+},
+{
+  "model": "webapp.team",
+  "pk": 28,
+  "fields": {
+    "user": 30,
+    "project": 12,
+    "start": "2019-11-14",
+    "end": "2019-11-14"
+  }
+},
+{
+  "model": "webapp.team",
+  "pk": 45,
+  "fields": {
+    "user": 31,
+    "project": 12,
+    "start": "2019-11-14",
+    "end": "2019-11-14"
+  }
+},
+{
+  "model": "webapp.team",
+  "pk": 46,
+  "fields": {
+    "user": 1,
+    "project": 12,
+    "start": "2019-11-14",
+    "end": "2019-11-14"
+  }
+},
+{
+  "model": "webapp.team",
+  "pk": 47,
+  "fields": {
+    "user": 30,
+    "project": 12,
+    "start": "2019-11-14",
+    "end": "2019-11-14"
+  }
+},
+{
+  "model": "webapp.team",
+  "pk": 48,
+  "fields": {
+    "user": 31,
+    "project": 12,
+    "start": "2019-11-14",
+    "end": "2019-11-14"
+  }
+},
+{
+  "model": "webapp.team",
+  "pk": 49,
+  "fields": {
+    "user": 1,
+    "project": 12,
+    "start": "2019-11-14",
+    "end": "2019-11-14"
+  }
+},
+{
+  "model": "webapp.team",
+  "pk": 50,
+  "fields": {
+    "user": 30,
+    "project": 12,
+    "start": "2019-11-14",
+    "end": "2019-11-14"
+  }
+},
+{
+  "model": "webapp.team",
+  "pk": 51,
+  "fields": {
+    "user": 31,
+    "project": 12,
+    "start": "2019-11-14",
+    "end": "2019-11-14"
+  }
+},
+{
+  "model": "webapp.team",
+  "pk": 52,
+  "fields": {
+    "user": 1,
+    "project": 12,
+    "start": "2019-11-14",
+    "end": "2019-11-14"
+  }
+},
+{
+  "model": "webapp.team",
+  "pk": 53,
+  "fields": {
+    "user": 30,
+    "project": 12,
+    "start": "2019-11-14",
+    "end": "2019-11-14"
+  }
+},
+{
+  "model": "webapp.team",
+  "pk": 54,
+  "fields": {
+    "user": 30,
+    "project": 12,
+    "start": "2019-11-14",
+    "end": "2019-11-14"
+  }
+},
+{
+  "model": "webapp.team",
+  "pk": 55,
+  "fields": {
+    "user": 1,
+    "project": 12,
+    "start": "2019-11-14",
+    "end": "2019-11-14"
+  }
+},
+{
+  "model": "webapp.team",
+  "pk": 56,
+  "fields": {
+    "user": 30,
+    "project": 12,
+    "start": "2019-11-14",
+    "end": "2019-11-14"
+  }
+},
+{
+  "model": "webapp.team",
+  "pk": 57,
+  "fields": {
+    "user": 1,
+    "project": 1,
+    "start": "2019-11-14",
+    "end": null
+  }
+},
+{
+  "model": "webapp.team",
+  "pk": 58,
+  "fields": {
+    "user": 1,
+    "project": 12,
+    "start": "2019-11-14",
+    "end": "2019-11-14"
+  }
+},
+{
+  "model": "webapp.team",
+  "pk": 59,
+  "fields": {
+    "user": 30,
+    "project": 12,
+    "start": "2019-11-14",
+    "end": "2019-11-14"
+  }
+},
+{
+  "model": "webapp.team",
+  "pk": 60,
+  "fields": {
+    "user": 31,
+    "project": 12,
+    "start": "2019-11-14",
+    "end": "2019-11-14"
+  }
+},
+{
+  "model": "webapp.team",
+  "pk": 61,
+  "fields": {
+    "user": 31,
+    "project": 12,
+    "start": "2019-11-14",
+    "end": null
   }
 }
 ]
