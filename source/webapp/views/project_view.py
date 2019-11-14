@@ -1,5 +1,5 @@
 from datetime import datetime
-
+from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.contrib.auth.models import User
 from django.core.paginator import Paginator
 from django.db.models import ProtectedError, Q
@@ -71,10 +71,12 @@ class ProjectView(DetailView):
         context['is_paginated'] = page.has_other_pages()
 
 
-class ProjectCreateView(CreateView):
+class ProjectCreateView(PermissionRequiredMixin, CreateView):
     model = Project
     template_name = 'project/project-create.html'
     form_class = ProjectForm
+    permission_required = 'webapp.add_project', 'webapp.add_team'
+    permission_denied_message = 'Access is denied!'
 
     def dispatch(self, request, *args, **kwargs):
         if not request.user.is_authenticated:
@@ -93,11 +95,13 @@ class ProjectCreateView(CreateView):
         return HttpResponseRedirect(self.get_success_url())
 
 
-class ProjectUpdateView(UpdateView):
+class ProjectUpdateView(PermissionRequiredMixin, UpdateView):
     model = Project
     template_name = 'project/project_update.html'
     fields = ['name', 'description']
     context_object_name = 'project'
+    permission_required = 'webapp.change_project'
+    permission_denied_message = 'Access is denied!'
 
     def dispatch(self, request, *args, **kwargs):
         if not request.user.is_authenticated:
@@ -108,10 +112,12 @@ class ProjectUpdateView(UpdateView):
         return reverse('webapp:project_view', kwargs={'pk': self.object.pk})
 
 
-class ProjectUsersUpdate(UpdateView):
+class ProjectUsersUpdate(PermissionRequiredMixin, UpdateView):
     model = Project
     form_class = ProjectUserForm
     template_name = 'project/project-user_edit.html'
+    permission_required = 'webapp.add_team', 'webapp.change_team'
+    permission_denied_message = 'Access is denied!'
 
     def get_initial(self):
         initial = super().get_initial()
@@ -144,9 +150,11 @@ class ProjectUsersUpdate(UpdateView):
         return redirect('webapp:project_view', pk=project_pk)
 
 
-class ProjectDeleteView(DeleteView):
+class ProjectDeleteView(PermissionRequiredMixin, DeleteView):
     model = Project
     template_name = 'error.html'
+    permission_required = 'webapp.delete_project'
+    permission_denied_message = 'Access is denied!'
 
     def get(self, request, *args, **kwargs):
         try:
@@ -161,3 +169,7 @@ class ProjectDeleteView(DeleteView):
 
     def get_success_url(self):
         return reverse('webapp:project_index')
+
+
+
+

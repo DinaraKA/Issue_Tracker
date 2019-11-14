@@ -1,4 +1,4 @@
-from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin, PermissionRequiredMixin
 from django.contrib.auth.models import User
 from django.db.models import Q
 from django.http import HttpResponseRedirect
@@ -55,10 +55,12 @@ class TaskView(DetailView):
     template_name = 'task/task.html'
 
 
-class TaskCreateView(LoginRequiredMixin, CreateView):
+class TaskCreateView(PermissionRequiredMixin, CreateView):
     model = Task
     template_name = 'task/create.html'
     form_class = TaskForm
+    permission_required = 'webapp.add_task'
+    permission_denied_message = 'Access is denied!'
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
@@ -82,9 +84,11 @@ class TaskCreateView(LoginRequiredMixin, CreateView):
         return kwargs
 
 
-class TaskProjectCreateView(LoginRequiredMixin, CreateView):
+class TaskProjectCreateView(PermissionRequiredMixin, CreateView):
     template_name = 'task/task_project_create.html'
     form_class = ProjectTaskForm
+    permission_required = 'webapp.add_task'
+    permission_denied_message = 'Access is denied!'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -105,11 +109,13 @@ class TaskProjectCreateView(LoginRequiredMixin, CreateView):
         kwargs['users'] = users_in_project
         return kwargs
 
-class TaskUpdateView(UserPassesTestMixin, UpdateView):
+class TaskUpdateView(PermissionRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Task
     template_name = 'task/update.html'
     form_class = TaskForm
     context_object_name = 'task'
+    permission_required = 'webapp.change_task'
+    permission_denied_message = 'Access is denied!'
 
     def get_success_url(self):
         return reverse('webapp:task_view', kwargs={'pk': self.object.pk})
@@ -131,11 +137,13 @@ class TaskUpdateView(UserPassesTestMixin, UpdateView):
             return False
 
 
-class TaskDeleteView(UserPassesTestMixin, DeleteView):
+class TaskDeleteView(PermissionRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Task
     context_object_name = 'task'
     template_name = 'task/delete.html'
     success_url = reverse_lazy('webapp:index')
+    permission_required = 'webapp.delete_task'
+    permission_denied_message = 'Access is denied!'
 
 
     def test_func(self, **kwargs):

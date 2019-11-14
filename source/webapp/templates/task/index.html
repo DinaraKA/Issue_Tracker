@@ -1,6 +1,8 @@
 {% extends 'base.html' %}
 {% block menu %}
-    <li><a href="{% url 'webapp:task_add' %}">Add Task</a></li>
+    {% if perms.webapp.add_task %}
+        <li><a href="{% url 'webapp:task_add' %}">Add Task</a></li>
+    {% endif %}
 {% endblock %}
 {% block content %}
     <h1>Issues</h1>

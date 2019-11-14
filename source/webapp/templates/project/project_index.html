@@ -1,6 +1,8 @@
 {% extends 'base.html' %}
 {% block menu %}
-    <li><a href="{% url 'webapp:project_add' %}">Add Project</a></li>
+    {% if perms.webapp.add_project %}
+        <li><a href="{% url 'webapp:project_add' %}">Add Project</a></li>
+    {% endif %}
 {% endblock %}
 {% block content %}
     <h2>Projects</h2>
@@ -13,10 +15,14 @@
         <table class="table">
             <thead>
                 <tr>
-                   <th scope="col">#</th>
-                   <th scope="col">Name</th>
-                   <th class="symbol" scope="col">Update</th>
-                   <th class="symbol" scope="col">Delete</th>
+                    <th scope="col">#</th>
+                    <th scope="col">Name</th>
+                    {% if perms.webapp.change_project %}
+                        <th class="symbol" scope="col">Update</th>
+                    {% endif %}
+                    {% if perms.webapp.delete_project %}
+                        <th class="symbol" scope="col">Delete</th>
+                    {% endif %}
                 </tr>
             </thead>
             {% for project in projects %}
@@ -24,8 +30,12 @@
                     <tr>
                         <th scope="row">{{ forloop.counter }}</th>
                         <td><a href="{% url 'webapp:project_view' project.pk %}">{{ project.name }}</a></td>
-                        <td class="symbol"><a href="{% url 'webapp:project_update' project.pk %}">&#x270E;</a></td>
-                        <td class="symbol"><a href="{% url 'webapp:project_delete' project.pk %}">X</a></td>
+                        {% if perms.webapp.change_project %}
+                            <td class="symbol"><a href="{% url 'webapp:project_update' project.pk %}">&#x270E;</a></td>
+                        {% endif %}
+                        {% if perms.webapp.delete_project %}
+                            <td class="symbol"><a href="{% url 'webapp:project_delete' project.pk %}">X</a></td>
+                        {% endif %}
                     </tr>
                 </tbody>
             {% endfor %}

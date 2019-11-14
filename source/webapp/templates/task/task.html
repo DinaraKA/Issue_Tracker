@@ -1,8 +1,12 @@
 {% extends 'base.html' %}
 {% block title %}{{ task.summary}}{% endblock %}
 {% block menu %}
-    <li><a href="{% url 'webapp:task_update' task.pk %}">Update</a></li>
-    <li><a href="{% url 'webapp:task_delete' task.pk %}">Delete</a></li>
+    {% if perms.webapp.change_task %}
+        <li><a href="{% url 'webapp:task_update' task.pk %}">Update</a></li>
+    {% endif %}
+    {% if perms.webapp.delete_task %}
+        <li><a href="{% url 'webapp:task_delete' task.pk %}">Delete</a></li>
+    {% endif %}
 {% endblock %}
 {% block content %}
     <div class="jumbotron jumbotron-fluid">

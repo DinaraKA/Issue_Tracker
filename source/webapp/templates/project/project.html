@@ -1,8 +1,12 @@
 {% extends 'base.html' %}
 {% block title %}{{ project.name}}{% endblock %}
 {% block menu %}
-    <li><a href="{% url 'webapp:project_update' project.pk %}">Update</a></li>
-    <li><a href="{% url 'webapp:project_delete' project.pk %}">Delete</a></li>
+    {% if perms.webapp.change_project %}
+        <li><a href="{% url 'webapp:project_update' project.pk %}">Update</a></li>
+    {% endif %}
+    {% if perms.webapp.delete_project %}
+        <li><a href="{% url 'webapp:project_delete' project.pk %}">Delete</a></li>
+    {% endif %}
 {% endblock %}
 {% block content %}
     <div class="jumbotron jumbotron-fluid">
@@ -15,7 +19,9 @@
                     <p>{{ team.user.username }} - started at {{ team.start|date:'Y-m-d' }}</p>
                 {% endfor %}
             <p class="task-links">
-                <a href="{% url 'webapp:project_add_user' project.pk %}">Edit team</a>
+                {% if perms.webapp.change_team and perms.webapp.add_team %}
+                    <a href="{% url 'webapp:project_add_user' project.pk %}">Edit team</a>
+                {% endif %}
             </p>
             <p><b>Created date: </b>{{ project.created_at|date:'Y-m-d H:i:s' }}</p>
             <hr/>
@@ -31,8 +37,12 @@
                         <div class="pre">{{ task.description }}</div>
                         <div>Assigned to: {{ task.assigned_to }}</div>
                         <p class="task-links">
-                            <a href="{% url 'webapp:task_update' task.pk %}">Edit</a>
-                            <a href="{% url 'webapp:task_delete' task.pk %}">Delete</a>
+                            {% if perms.webapp.change_task %}
+                                <a href="{% url 'webapp:task_update' task.pk %}">Edit</a>
+                            {% endif %}
+                            {% if perms.webapp.delete_task %}
+                                <a href="{% url 'webapp:task_delete' task.pk %}">Delete</a>
+                            {% endif %}
                         </p>
                     </div>
                 {% empty %}
@@ -42,7 +52,9 @@
             {% if is_paginated %}
                 {% include 'partial/pagination.html' %}
             {% endif %}
-            <a href="{% url 'webapp:project_task_create' project.pk %}">Add task</a>
+            {% if perms.webapp.add_task %}
+                <a href="{% url 'webapp:project_task_create' project.pk %}">Add task</a>
+            {% endif %}
         </div>
     </div>
 {% endblock %}
