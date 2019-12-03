@@ -22,6 +22,7 @@
             {% block menu %}{% endblock %}
             <li class="menu-right">
                 <ul>
+                    <li><a href="#myModal" data-toggle="modal">Статистика</a></li>
                     {% if request.user.is_authenticated %}
                         <li><a href="{% url 'accounts:user_index' %}">Users</a></li>
                         <li style="color: darkblue;">Hello, <a href="{%  url 'accounts:user_detail' request.user.pk %}">{{request.user}}!</a></li>
@@ -37,6 +38,41 @@
 </nav>
 <div class="container">
     {% block content %}{% endblock %}
+</div>
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+          <h2 class="modal-title" id="exampleModalLabel">Statistics</h2>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+          </button>
+          </div>
+          <div class="modal-body">
+                {% if request.user.is_authenticated %}
+                    <h3>User: {{ request.user.username }}</h3>
+                {% endif %}
+                <h4>Pages you visited:</h4>
+                <ul>
+                    {% for page, count in visits.items %}
+                        <li>{{ page }}: {{ count }} time(s)</li>
+                    {% endfor %}
+                </ul>
+                <p>Total {{ visits_total }} visits.</p>
+                <h4>Time you spend in site:</h4>
+                <ul>
+                    {% for page, count in times.items %}
+                        <li>{{ page }}: {{ count|stringformat:".2f" }} seconds</li>
+                    {% endfor %}
+                </ul>
+                <p>Total {{ times_total|stringformat:".2f" }} seconds</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
 </div>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>

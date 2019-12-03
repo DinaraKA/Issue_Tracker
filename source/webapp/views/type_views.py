@@ -5,15 +5,16 @@ from django.urls import reverse
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from webapp.models import Type
 from webapp.forms import TypeForm
+from webapp.views.base_views import SessionStatMixin
 
 
-class TypeIndexView(ListView):
+class TypeIndexView(SessionStatMixin, ListView):
     context_object_name = 'types'
     model = Type
     template_name = 'type/type_index.html'
 
 
-class TypeCreateView(LoginRequiredMixin, CreateView):
+class TypeCreateView(LoginRequiredMixin, SessionStatMixin, CreateView):
     model = Type
     template_name = 'type/type_create.html'
     form_class = TypeForm
@@ -22,7 +23,7 @@ class TypeCreateView(LoginRequiredMixin, CreateView):
         return reverse('webapp:type_index')
 
 
-class TypeUpdateView(LoginRequiredMixin, UpdateView):
+class TypeUpdateView(LoginRequiredMixin, SessionStatMixin, UpdateView):
     model = Type
     template_name = 'type/type_update.html'
     form_class = TypeForm
@@ -32,7 +33,7 @@ class TypeUpdateView(LoginRequiredMixin, UpdateView):
         return reverse('webapp:type_index')
 
 
-class TypeDeleteView(LoginRequiredMixin, DeleteView):
+class TypeDeleteView(LoginRequiredMixin, SessionStatMixin, DeleteView):
     model = Type
     template_name = 'error.html'
 

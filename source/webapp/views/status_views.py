@@ -5,15 +5,16 @@ from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from webapp.models import Status
 from webapp.forms import StatusForm
 from django.db.models import ProtectedError
+from webapp.views.base_views import SessionStatMixin
 
 
-class StatusIndexView(ListView):
+class StatusIndexView(SessionStatMixin, ListView):
     context_object_name = 'statuses'
     model = Status
     template_name = 'status/status_index.html'
 
 
-class StatusCreateView(LoginRequiredMixin, CreateView):
+class StatusCreateView(LoginRequiredMixin, SessionStatMixin, CreateView):
     model = Status
     template_name = 'status/status_create.html'
     form_class = StatusForm
@@ -22,7 +23,7 @@ class StatusCreateView(LoginRequiredMixin, CreateView):
         return reverse('webapp:status_index')
 
 
-class StatusUpdateView(LoginRequiredMixin, UpdateView):
+class StatusUpdateView(LoginRequiredMixin, SessionStatMixin, UpdateView):
     model = Status
     template_name = 'status/status_update.html'
     form_class = StatusForm
@@ -32,7 +33,7 @@ class StatusUpdateView(LoginRequiredMixin, UpdateView):
         return reverse('webapp:status_index')
 
 
-class StatusDeleteView(LoginRequiredMixin, DeleteView):
+class StatusDeleteView(LoginRequiredMixin, SessionStatMixin, DeleteView):
     model = Status
     template_name = 'error.html'
 

@@ -8,9 +8,10 @@ from django.utils.http import urlencode
 from django.views.generic import ListView, DetailView, CreateView, UpdateView,DeleteView
 from webapp.models import Task, Project, Team
 from webapp.forms import TaskForm, ProjectTaskForm, SimpleSearchForm
+from webapp.views.base_views import SessionStatMixin
 
 
-class IndexView(ListView):
+class IndexView(SessionStatMixin, ListView):
     context_object_name = 'tasks'
     model = Task
     template_name = 'task/index.html'
@@ -48,14 +49,14 @@ class IndexView(ListView):
         return None
 
 
-class TaskView(DetailView):
+class TaskView(SessionStatMixin, DetailView):
     context_object_name = 'task'
     model = Task
     pk_url_kwarg = 'pk'
     template_name = 'task/task.html'
 
 
-class TaskCreateView(PermissionRequiredMixin, CreateView):
+class TaskCreateView(PermissionRequiredMixin, SessionStatMixin, CreateView):
     model = Task
     template_name = 'task/create.html'
     form_class = TaskForm
@@ -84,7 +85,7 @@ class TaskCreateView(PermissionRequiredMixin, CreateView):
         return kwargs
 
 
-class TaskProjectCreateView(PermissionRequiredMixin, CreateView):
+class TaskProjectCreateView(PermissionRequiredMixin, SessionStatMixin, CreateView):
     template_name = 'task/task_project_create.html'
     form_class = ProjectTaskForm
     permission_required = 'webapp.add_task'
@@ -109,7 +110,7 @@ class TaskProjectCreateView(PermissionRequiredMixin, CreateView):
         kwargs['users'] = users_in_project
         return kwargs
 
-class TaskUpdateView(PermissionRequiredMixin, UserPassesTestMixin, UpdateView):
+class TaskUpdateView(PermissionRequiredMixin, UserPassesTestMixin, SessionStatMixin, UpdateView):
     model = Task
     template_name = 'task/update.html'
     form_class = TaskForm
@@ -137,7 +138,7 @@ class TaskUpdateView(PermissionRequiredMixin, UserPassesTestMixin, UpdateView):
             return False
 
 
-class TaskDeleteView(PermissionRequiredMixin, UserPassesTestMixin, DeleteView):
+class TaskDeleteView(PermissionRequiredMixin, UserPassesTestMixin, SessionStatMixin, DeleteView):
     model = Task
     context_object_name = 'task'
     template_name = 'task/delete.html'

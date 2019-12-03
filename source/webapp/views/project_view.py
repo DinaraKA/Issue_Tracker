@@ -10,8 +10,10 @@ from django.utils.http import urlencode
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from webapp.forms import ProjectTaskForm, ProjectForm, SimpleSearchForm, ProjectUserForm
 from webapp.models import Project, Team
+from webapp.views.base_views import SessionStatMixin
 
-class ProjectIndexView(ListView):
+
+class ProjectIndexView(SessionStatMixin, ListView):
     context_object_name = 'projects'
     model = Project
     template_name = 'project/project_index.html'
@@ -48,7 +50,7 @@ class ProjectIndexView(ListView):
         return None
 
 
-class ProjectView(DetailView):
+class ProjectView(SessionStatMixin, DetailView):
     context_object_name = 'project'
     model = Project
     pk_url_kwarg = 'pk'
@@ -71,7 +73,7 @@ class ProjectView(DetailView):
         context['is_paginated'] = page.has_other_pages()
 
 
-class ProjectCreateView(PermissionRequiredMixin, CreateView):
+class ProjectCreateView(PermissionRequiredMixin, SessionStatMixin, CreateView):
     model = Project
     template_name = 'project/project-create.html'
     form_class = ProjectForm
@@ -95,7 +97,7 @@ class ProjectCreateView(PermissionRequiredMixin, CreateView):
         return HttpResponseRedirect(self.get_success_url())
 
 
-class ProjectUpdateView(PermissionRequiredMixin, UpdateView):
+class ProjectUpdateView(PermissionRequiredMixin, SessionStatMixin, UpdateView):
     model = Project
     template_name = 'project/project_update.html'
     fields = ['name', 'description']
@@ -112,7 +114,7 @@ class ProjectUpdateView(PermissionRequiredMixin, UpdateView):
         return reverse('webapp:project_view', kwargs={'pk': self.object.pk})
 
 
-class ProjectUsersUpdate(PermissionRequiredMixin, UpdateView):
+class ProjectUsersUpdate(PermissionRequiredMixin, SessionStatMixin, UpdateView):
     model = Project
     form_class = ProjectUserForm
     template_name = 'project/project-user_edit.html'
@@ -150,7 +152,7 @@ class ProjectUsersUpdate(PermissionRequiredMixin, UpdateView):
         return redirect('webapp:project_view', pk=project_pk)
 
 
-class ProjectDeleteView(PermissionRequiredMixin, DeleteView):
+class ProjectDeleteView(PermissionRequiredMixin, SessionStatMixin, DeleteView):
     model = Project
     template_name = 'error.html'
     permission_required = 'webapp.delete_project'
