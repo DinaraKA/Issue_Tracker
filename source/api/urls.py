@@ -1,5 +1,7 @@
 from django.urls import path, include
-from .views import TaskViewSet, ProjectViewSet
+from rest_framework.authtoken.views import obtain_auth_token
+
+from .views import TaskViewSet, ProjectViewSet, LogoutView
 from rest_framework import routers
 
 router = routers.DefaultRouter()
@@ -10,5 +12,7 @@ app_name = 'api'
 
 
 urlpatterns = [
-    path('', include(router.urls))
+    path('', include(router.urls)),
+    path('login/', obtain_auth_token, name='obtain_auth_token'),
+    path('logout/', LogoutView.as_view(), name='delete_auth_token')
 ]
