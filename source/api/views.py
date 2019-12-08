@@ -1,4 +1,6 @@
-from rest_framework import viewsets
+from rest_framework import viewsets, status
+from rest_framework.authtoken.models import Token
+from rest_framework.permissions import DjangoModelPermissions, DjangoModelPermissionsOrAnonReadOnly, AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -17,11 +19,13 @@ class LogoutView(APIView):
 
 
 class TaskViewSet(viewsets.ModelViewSet):
+    permission_classes = [DjangoModelPermissionsOrAnonReadOnly]
     serializer_class = TasksSerializer
     queryset =Task.objects.all()
 
 
 class ProjectViewSet(viewsets.ModelViewSet):
+    permission_classes = [DjangoModelPermissionsOrAnonReadOnly]
     serializer_class = ProjectsSerializer
     queryset = Project.objects.all()
 
